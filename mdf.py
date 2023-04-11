@@ -26,13 +26,21 @@ class mdf:
         """ 
         Menualy Defined Functions (MDF)
         For more details: help(function_name)
-
+        
         1. DataETL
         2. GibbsFE
         3. DataChop
         4. DataArrange
         5. DataProvAvg
         6. BestTP
+        7. PlotAllData
+        8. PlotTempData
+        9. PlotEUTemp
+        10. PlotEUPres
+        11. PlotEUTR
+        12. PlotEUTP
+        13. PlotEUGFE
+        14. PlotEUdG
         """
         self.datapath = datapath
         print(f"Loading data from: {datapath}")
