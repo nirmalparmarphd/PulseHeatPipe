@@ -6,7 +6,8 @@
 MDF - Manually defined functions for Advanced Data Analysis and Machine Learning.
 
 MDF includes various functions for data analysis and for data plotting/visualisation specifically for PHP experimental data.
-    For more details: help(mdf.function_name), eg: help(mdf.DataETL) or for general help, eg: help(mdf)
+
+For more details: help(mdf.function_name), eg: help(mdf.DataETL) or for general help, eg: help(mdf)
     
     1. DataETL
     2. GibbsFE
@@ -24,10 +25,22 @@ MDF includes various functions for data analysis and for data plotting/visualisa
     14. PlotEUdG
     15. PlotEUdT
 
-    
     HELP: help(mdf.function)
 
-**NOTE**: The experimental data file must prepared in '.xlsx' formate. The data must contain atleast following columns with mentioned titles: 
-[Time (Min), Tc - AVG 1&2 (oC), Te - AVG 1,2,3 (oC),Pressure (mm of Hg), Te - Tc (oC), Q (W), Resistance (oC/W)]
+Example:
+```
+>>> help(mdf.DataETL)
+>>> Help on function DataETL in module mdf:
+
+    DataETL(datapath: str)
+        DataETL loads experimental data from all experimental data files (.xlsx).
+        Filters data and keeps only important columns.
+        Combine selected data and save to csv file.
+        Conver units to MKS [K, bar] system and save to csv file. 
+        
+        useage: df, df_conv = DataETL('datapath')
+```
+**NOTE**: The experimental data file must prepared in '.xlsx' formate. The data must contain atleast following columns with mentioned titles:
+[Time (Min), Tc - AVG 1&2 (oC), Te - AVG 1,2,3 (oC), Pressure (mm of Hg), Te - Tc (oC), Q (W), Resistance (oC/W)]
 
 Author: Nirmal Parmar, PhD

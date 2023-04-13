@@ -160,7 +160,6 @@ class mdf:
         return print(msg)
     
     # find optimal G(T,P) of PHP
-
     def BestTP(data):
         """ 
         BestTP finds best G(T,P) with lowest dG (Change in Gibbs Free Energy for Te->Tc values at constant Pressure) from the experimental dataset.
