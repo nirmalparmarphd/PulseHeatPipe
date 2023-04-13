@@ -41,6 +41,7 @@ class mdf:
         12. PlotEUTP
         13. PlotEUGFE
         14. PlotEUdG
+        15. PlotEUdT
         """
         self.datapath = datapath
         print(f"Loading data from: {datapath}")
@@ -110,8 +111,8 @@ class mdf:
         """
         Tmina = data['Te[K]'].min()
         Tmaxa = data['Te[K]'].max()
-        assert Tmin < Tmax, f"Entered wrong values: Correct range [Tmin:{Tmina}, Tmax:{Tmaxa} ]"
-        print(f"Optimal range of temperature(Te) for data selection: [Tmin:{Tmina}, Tmax:{Tmaxa}]")
+        assert Tmin < Tmax, f"Entered wrong values: Correct range [Tmin:{round(Tmina,4)}, Tmax:{round(Tmaxa,4)} ]"
+        print(f"Optimal range of temperature(Te) for data selection: [Tmin:{round(Tmina,4)}, Tmax:{round(Tmaxa)}]")
         data_T = data[data['Te[K]'] <= Tmax]
         data_T = data_T[data_T['Te[K]'] >= Tmin]
         return data_T
@@ -170,14 +171,19 @@ class mdf:
         df_opt = data[data['dG [KJ/mol]'] == data['dG [KJ/mol]'].min()]
         df_opt_idx = df_opt.index
         Te_opt = data['Te[K]'].loc[df_opt_idx]
+        dT_opt = data['dT[K]'].loc[df_opt_idx]
         P_opt = data['P[bar]'].loc[df_opt_idx]
         dG_opt = data['dG [KJ/mol]'].loc[df_opt_idx]
         GFE_opt = data['GFE [KJ/mol]'].loc[df_opt_idx]
+        TR_opt = data['TR[K/W]'].loc[df_opt_idx]
 
-        msg = (f'Optimal G(T,P) at lowest dG [{round(dG_opt.iloc[0],4)}]\n'
-               f'GFE G(T,P): G({round(Te_opt.iloc[0],4)},{round(P_opt.iloc[0],4)}) = {round(GFE_opt.iloc[0],4)} [KJ/mol]\n'
-               f'Temprature Te [K]: {round(Te_opt.iloc[0],4)} \n'
-               f'Pressure-Vacuume [bar]: {round(P_opt.iloc[0],4)} \n');
+        msg = (f'Optimal G(T,P) condition at lowest (optimal) dG[{round(dG_opt.iloc[0],4)}]\n'
+               
+               f'Te optimal:        {round(Te_opt.iloc[0],4)}[K] \n'
+               f'P  optimal:        {round(P_opt.iloc[0],4)}[bar] \n'
+               f'dT optimal:        {round(dT_opt.iloc[0],4)}[K] \n'
+               f'TR optimal:        {round(TR_opt.iloc[0],4)}[K/W] \n'
+               f'GFE optimal:       dG({round(Te_opt.iloc[0],4)}, {round(P_opt.iloc[0],4)}) = {round(GFE_opt.iloc[0],4)} [KJ/mol]\n');
         return print(msg)
     
     def PlotAllData(data):
@@ -284,5 +290,19 @@ class mdf:
         plt.ylim(-200,100)
         plt.xlabel('Temperature - Te [K]')
         plt.ylabel('Change in Gibbs Free Energy [KJ/mol]')
+        plt.legend()
+        return
+    
+    def PlotEUdT(df_mean, df_std):
+        """ Data plotting 
+            Plotfunction(df_mean, df_std)
+        """
+        plt.figure(figsize=(10,5));
+        plt.plot(df_mean['Te[K]'], df_mean['dT[K]'], '.k', label='dT[K]')
+        idx = df_std.index
+        df_mean_idx = df_mean.loc[idx]
+        plt.fill_between(df_mean_idx['Te[K]'],df_mean_idx['dT[K]'] - 2* df_std['dT[K]'], df_mean_idx['dT[K]'] + 2* df_std['dT[K]'], color='r', alpha=0.3, label='Expanded Uncertainty')
+        plt.xlabel('Temperature - Te [K]')
+        plt.ylabel('Change in Temperature [K]')
         plt.legend()
         return
