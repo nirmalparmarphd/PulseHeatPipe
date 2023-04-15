@@ -48,6 +48,6 @@ visual.plot_all_data(df_gfe)
 
 ```
 **NOTE**: The experimental data file must prepared in '.xlsx' formate. The data must contain atleast following columns with mentioned titles:
-[Time (Min), Tc - AVG 1&2 (oC), Te - AVG 1,2,3 (oC), Pressure (mm of Hg), Te - Tc (oC), Q (W), Resistance (oC/W)]
+['Time (Min)', 'Tc - AVG (oC)', 'Te - AVG (oC)', 'Pressure (mm of Hg)', 'Te - Tc (oC)', 'Q (W)','Resistance (oC/W)']
 
 Author: Nirmal Parmar, PhD
