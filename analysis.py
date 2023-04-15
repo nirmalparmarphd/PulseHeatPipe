@@ -242,6 +242,7 @@ class DataVisualisation(PulseHeatPipe):
             plt.fill_between(df_std[self.xproperty], df_mean_idx[self.property] - 2* df_std[self.property], df_mean_idx[self.property] + 2* df_std[self.property],color=self.eu, alpha=0.2, label='Expanded Uncertainty')
             plt.xlabel(self.xproperty)
             plt.ylabel(self.property)
+            plt.title(f"Expanded Uncertainty - {self.sample}")
             plt.legend()
         else:
             print(f"Entered invalid value [{self.property}] of thermal property!\n")
