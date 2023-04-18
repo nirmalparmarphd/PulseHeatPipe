@@ -56,7 +56,7 @@ class PulseHeatPipe:
         useage: analysis = PulseHeatPipe("path")
                 df, df_conv = analysis.data_etl()
         """
-        data_filenames_list = glob.glob((self.datapath + 'php_*.xlsx'))
+        data_filenames_list = glob.glob((self.datapath + '*.xlsx'))
         df_frames = []
         for i in range(0, len(data_filenames_list)) :
             # loading data in loop
@@ -184,7 +184,7 @@ class PulseHeatPipe:
     
 ## Data Visualisation
 class DataVisualisation(PulseHeatPipe):
-    """ ## Data Visualisation class to plot PHP data.
+    """ ## Data Visualisation class to plot PHP data as a function of Te[K].
 
         ## useage: 
         ### importing module
