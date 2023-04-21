@@ -137,17 +137,3 @@ class MachineLearning:
         x_train, x_test, y_train, y_test = train_test_split(self.x_data, self.y_data, test_size=0.2, random_state=42)
         return x_train, x_test, y_train, y_test
     
-    def mutual_info(self, x:pd.DataFrame, y:pd.DataFrame):
-        """
-        mutual_info is a method to estimate mutual information (theory of information entropy) for a regression problem.
-
-        useage:
-        mutual_info(x_data, y_data)
-        """
-        self.x = x
-        self.y = y
-        mutual_info = mutual_info_regression(self.x, self.y)
-        mutual_info = pd.Series(mutual_info)
-        mutual_info.index = self.x.index
-        mutual_info_result = mutual_info.sort_values(ascending=False)
-        return print(mutual_info_result)
