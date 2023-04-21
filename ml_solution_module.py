@@ -8,6 +8,8 @@ import os
 import missingno as msno
 import glob
 from datetime import datetime
+from sklearn.feature_selection import mutual_info_regression
+from sklearn.model_selection import train_test_split
 
 class MachineLearning:
     def __init__(self, path:str):
@@ -118,3 +120,34 @@ class MachineLearning:
         self.cutoff = cutoff
         data_filtered = self.data[data['Te[K]'] <= self.cutoff]
         return data_filtered
+
+    def data_split(self, data:pd.DataFrame, x=['Te[K]', 'P[bar]', 'Fluid', 'FR'], y=['Tc[K]', 'TR[K/W]', 'dG[KJ/mol]']):
+        """
+        data_xy_split is a method to split the data in features (x) and labels (y) as well as for train and test split.
+        default values for x=['Te[K]', 'P[bar]', 'Fluid', 'FR']
+
+        useage:
+        x_data, y_data = data_xy_split(data, x=['Te[K]', 'P[bar]', 'Fluid', 'FR'], y=['Tc[K]', 'TR[K/W]', 'dG[KJ/mol])
+        """
+        self.data = data
+        self.x = x
+        self.y = y
+        self.x_data = data[self.x]
+        self.y_data = data[self.y]
+        x_train, x_test, y_train, y_test = train_test_split(self.x_data, self.y_data, test_size=0.2, random_state=42)
+        return x_train, x_test, y_train, y_test
+    
+    def mutual_info(self, x:pd.DataFrame, y:pd.DataFrame):
+        """
+        mutual_info is a method to estimate mutual information (theory of information entropy) for a regression problem.
+
+        useage:
+        mutual_info(x_data, y_data)
+        """
+        self.x = x
+        self.y = y
+        mutual_info = mutual_info_regression(self.x, self.y)
+        mutual_info = pd.Series(mutual_info)
+        mutual_info.index = self.x.index
+        mutual_info_result = mutual_info.sort_values(ascending=False)
+        return print(mutual_info_result)
