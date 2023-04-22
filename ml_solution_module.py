@@ -10,6 +10,7 @@ import glob
 from datetime import datetime
 from sklearn.feature_selection import mutual_info_regression
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, r2_score
 
 class MachineLearning:
     def __init__(self, path:str):
@@ -137,3 +138,50 @@ class MachineLearning:
         x_train, x_test, y_train, y_test = train_test_split(self.x_data, self.y_data, test_size=0.2, random_state=42)
         return x_train, x_test, y_train, y_test
     
+    def mae_error(self, prediction, y_test, para=['Tc[K]', 'TR[K/W]', 'dG[KJ/mol]']):
+        """
+        mae_error is a method to estimate the Mean Absolute error in the prediction by the ML model.
+
+        useage:
+        mae_error(prediction, y_test, para=['Tc[K]', 'TR[K/W]', 'dG[KJ/mol]'])
+        """
+        self.prediction = prediction
+        self.y_test = y_test
+        self.para = para
+        for i in para:
+            err = mean_absolute_error(prediction[i], y_test[i])
+            print(f'Mean Absolute Error in the preddiction [{i}]: {round(err,4)}')
+        
+    def avg_error(self, prediction, y_test, para=['Tc[K]', 'TR[K/W]', 'dG[KJ/mol]']):
+        """
+        avg_error is a method to estimate the average [%] error in the prediction by the ML model.
+
+        useage:
+        avg_error(prediction, y_test, para=['Tc[K]', 'TR[K/W]', 'dG[KJ/mol]'])
+        """
+        self.prediction = prediction
+        self.y_test = y_test
+        self.para = para
+        for i in para:
+            err = (prediction[i].astype(float)/y_test[i].astype(float))
+            avg_err = abs(err.mean()*100)
+            print(f'Average prediction accuracy over a test data [{i}]: {round(avg_err,4)} [%]')
+
+    def goodness_of_fit(self, prediction, y_test, k:int):
+        """
+        r2_score is a method to estimate R2-score and R2-adjusted score for the ML prediction.
+
+        useage:
+        goodness_of_fit(prediction, y_test)
+        here, k = number of explanatory variables
+        """
+        self.prediction = prediction
+        self.y_test = y_test
+        r2 = r2_score(y_test, prediction)
+        n = y_test.shape[0]
+        self.k = k
+        r2_adj = 1 - (((1-r2)*(n-1)) / (n-k-1))
+        result = (f'R2 score: {round(r2,4)}\nR2-adjusted score: {round(r2_adj,4)}')
+        print(result)
+
+
