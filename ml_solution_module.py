@@ -17,7 +17,7 @@ class MachineLearning:
         """
         ## MachineLearning is a class to perform various operations related to Machine Learning practice.
 
-        ## useage:
+        ## usage:
         ### from ml_solutions import MachineLearning
         ml = MachineLearning("path")
         ### for help
@@ -32,13 +32,13 @@ class MachineLearning:
             os.mkdir(self.output_path)
             print(f'{self.output_path} directory created.')
         else:
-            print(f'{self.output_path} already exists and ML reuslts will be stored here.')
+            print(f'{self.output_path} already exists and ML results will be stored here.')
 
     def data_prep(self, csv_file:str, sample:str, fr:float):
         """
         data_prep is a method to add information about the type of the working fluid (nanofluid or water as a simple working fluid) and its filling ratio in the PHP setup.
 
-        useage:
+        usage:
         df_prep = ml.data_prep("data/path_individual_file", "DI", "40")
         """
         self.csv_file = csv_file
